@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.springframework.org/schema/beans 默认命名空间：它没有空间名，用于Spring Bean的定义 -->
+<!-- http://www.w3.org/2001/XMLSchema-instance xsi命名空间：这个命名空间用于为每个文档中命名空间指定相应的Schema样式文件，是标准组织定义的标准命名空间 -->
+<!-- http://www.springframework.org/schema/p p-namespace，对于set函数依赖注入，传统的property 
+	name ref，可以简写成p:name-ref=id 或 p:name=value -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 构造函数 依赖注入，对应class用ref，多个参数按顺序写 -->
+	<bean id="textEditor" class="com.spring.di.bean.TextEditor"
+		scope="prototype">
+		<constructor-arg ref="spellChecker" />
+		<constructor-arg ref="spellChecker2" />
+	</bean>
+
+	<!-- Definition for spellChecker bean -->
+	<bean id="spellChecker" class="com.spring.di.bean.SpellChecker" />
+	<bean id="spellChecker2"
+		class="com.spring.di.bean.SpellChecker2nd" />
+
+	<!-- 构造函数 依赖注入，对应值用value，多个参数可根据type来识别 -->
+	<bean id="diConstructorValueBean"
+		class="com.spring.di.bean.DiConstructorValueBean">
+		<constructor-arg type="int" value="2001" />
+		<constructor-arg type="java.lang.String"
+			value="DiConValue1" />
+	</bean>
+
+	<!-- 构造函数 依赖注入，推荐的做法，多个参数用index来指明顺序，引用class用ref，指定值用value -->
+	<bean id="diConstructorValueBean2"
+		class="com.spring.di.bean.DiConstructorValueBean2nd">
+		<constructor-arg index="0" value="2002" />
+		<constructor-arg index="1" value="DiConValue2" />
+	</bean>
+
+	<!-- 基于set函数的依赖注入，用property元素，引用class用ref，值用value -->
+	<bean id="textEditor2" class="com.spring.di.bean.TextEditor2nd">
+		<property name="spellChecker" ref="spellChecker" />
+		<property name="spellChecker2nd" ref="spellChecker2" />
+	</bean>
+
+	<!-- 基于set函数的依赖注入，用p namespace,简写成属性p:name-ref=id 或 p:name=value -->
+	<bean id="xmlPNamespace1" class="com.spring.di.bean.XmlPNamespace"
+		p:name="name1" p:obj-ref="xmlPNamespace2">
+	</bean>
+
+	<bean name="xmlPNamespace2"
+		class="com.spring.di.bean.XmlPNamespace" p:name="name2">
+	</bean>
+
+	<!--采用内部类定义的方式，用set函数 依赖注入，并不一定真是内部类，但是声明范围仅在bean定义内生效 -->
+	<bean id="textEditor3" class="com.spring.di.bean.TextEditor2nd">
+		<property name="spellChecker">
+			<bean id="checkSpell1" class="com.spring.di.bean.SpellChecker" />
+		</property>
+		<property name="spellChecker2nd">
+			<bean id="checkSpell2"
+				class="com.spring.di.bean.SpellChecker2nd" />
+		</property>
+	</bean>
+
+</beans>
