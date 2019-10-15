@@ -1,4 +1,4 @@
-package com.tianyi.wang;
+package com.spring.bean;
 
 public class HelloWorld {
 	private String message;
