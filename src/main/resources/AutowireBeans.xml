@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.springframework.org/schema/beans 默认命名空间：它没有空间名，用于Spring Bean的定义 -->
+<!-- http://www.w3.org/2001/XMLSchema-instance xsi命名空间：这个命名空间用于为每个文档中命名空间指定相应的Schema样式文件，是标准组织定义的标准命名空间 -->
+<!-- http://www.springframework.org/schema/p p-namespace，对于set函数依赖注入，传统的property 
+	name ref，可以简写成p:name-ref=id 或 p:name=value -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 自动装配，autowire = byName, Spring会查找定义名为 spellChecker的 bean, 但是value不能自动装配，还是需要手动指定 -->
+	<bean id="textEditor" class="com.spring.autowire.bean.TextEditor"
+		autowire="byName">
+		<property name="name" value="Text Editor Name 1st."></property>
+	</bean>
+
+	<!-- Definition for spellChecker bean -->
+	<bean id="spellChecker"
+		class="com.spring.autowire.bean.SpellChecker" />
+
+	<!-- 自动装配，autowire = byType, Spring会查找类型为SpellChecker的 bean, 但是value不能自动装配，还是需要手动指定 -->
+	<bean id="textEditor2" class="com.spring.autowire.bean.TextEditor"
+		autowire="byType">
+		<property name="name" value="Text Editor Name 2nd."></property>
+	</bean>
+
+	<!-- 自动装配，autowire = byType, Spring会查找类型为SpellChecker的 bean, 但是value不能自动装配，还是需要手动指定 -->
+	<bean id="textEditor3"
+		class="com.spring.autowire.bean.TextEditor2nd" autowire="constructor">
+		<constructor-arg value="Text Editor Name 3rd." />
+	</bean>
+
+	<!-- 自动装配，autowire = byName, Spring会查找定义名为 spellChecker的 bean, 但是value不能自动装配，还是需要手动指定 -->
+	<bean id="textEditor4"
+		class="com.spring.autowire.bean.TextEditor2nd" autowire="constructor"
+		p:name="Text Editor Name 4th.">
+	</bean>
+
+</beans>

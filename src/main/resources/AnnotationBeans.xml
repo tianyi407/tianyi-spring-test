@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.springframework.org/schema/beans 默认命名空间：它没有空间名，用于Spring Bean的定义 -->
+<!-- http://www.w3.org/2001/XMLSchema-instance xsi命名空间：这个命名空间用于为每个文档中命名空间指定相应的Schema样式文件，是标准组织定义的标准命名空间 -->
+<!-- http://www.springframework.org/schema/p p-namespace，对于set函数依赖注入，传统的property 
+	name ref，可以简写成p:name-ref=id 或 p:name=value -->
+<!-- http://www.springframework.org/schema/context 要使用注解啦 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 声明使用注解 -->
+	<context:annotation-config />
+
+	<!-- required注解，必须得赋值的属性 -->
+	<bean id="requiredInnerBean"
+		class="com.spring.annotation.bean.RequiredInnerBean"
+		p:message1="InnerBean message1.">
+	</bean>
+
+	<bean id="requiredTestBean"
+		class="com.spring.annotation.bean.RequiredTestBean"
+		p:name="TestBean name." p:innerBean-ref="requiredInnerBean">
+	</bean>
+
+	<bean id="spellChecker"
+		class="com.spring.annotation.bean.SpellChecker">
+		<property name="message" value="MaiMai HaHa"></property>
+	</bean>
+
+	<!-- autowire 自动装配的属性，可以省去声明set方法 -->
+	<bean id="autowireText1"
+		class="com.spring.annotation.bean.AutowireTextEditor1"></bean>
+
+	<bean id="autowireText2"
+		class="com.spring.annotation.bean.AutowireTextEditor2"></bean>
+
+	<bean id="autowireText3"
+		class="com.spring.annotation.bean.AutowireTextEditor3"></bean>
+
+	<bean id="student1" class="com.spring.annotation.bean.Student"
+		p:age="21" p:name="Tianyi"></bean>
+
+	<bean id="student2" class="com.spring.annotation.bean.Student">
+		<property name="age" value="22"></property>
+		<property name="name" value="Chenya"></property>
+	</bean>
+
+
+
+	<!-- qualifier 当有个对象或多个实现类实现一个接口时，autowire一个接口或引用时，需要用qualifier指明具体的对象或具体的实现类 -->
+	<bean id="qualifierProfile"
+		class="com.spring.annotation.bean.QualifierProfile"></bean>
+
+	<bean id="postConPreDes"
+		class="com.spring.annotation.bean.PostConstructPreDestroy"
+		p:message="Post Construct and Pre Derstroy Message!"></bean>
+
+</beans>
