@@ -12,10 +12,12 @@ import org.aspectj.lang.annotation.Pointcut;
 public class AopLoggingAspectJ {
 
 	/**
-	 * 声明一个共用的触发点pointcut
+	 * 声明一个共用的触发点pointcut 用于取代：<aop:pointcut expression="execution(*
+	 * com.spring.aop.bean.AopTestBean.*(..))" id= "allApi"/>
+	 * 要求：方法必须是private，没有值，名称自定义，没有参数
 	 */
 	@Pointcut("execution(* com.spring.aop.bean.AopTestBean.*(..))")
-	public void allApi() {
+	private void allApi() {
 	}
 
 	/**

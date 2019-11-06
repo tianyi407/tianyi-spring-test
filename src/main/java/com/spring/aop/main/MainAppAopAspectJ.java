@@ -2,7 +2,6 @@ package com.spring.aop.main;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.util.StringUtils;
 
 import com.spring.aop.bean.AopTestBean;
 
